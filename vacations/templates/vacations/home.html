@@ -1,0 +1,24 @@
+{% extends "vacations/base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Choose a Country</h1>
+    <div class="row">
+        {% for country in countries %}
+        <div class="col-md-4">
+            <div class="card my-3">
+                <img src="{{ country.image.url }}" class="card-img-top country-image" alt="{{ country.name }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ country.name }}</h5>
+                    <a href="{% url 'country_detail' country_name=country.name %}" class="btn btn-primary">View
+                        Vacations</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

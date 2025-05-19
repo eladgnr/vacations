@@ -1,0 +1,32 @@
+{% extends "vacations/base.html" %}
+{% block title %}{{ country_name }} Vacations{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Vacation Options in {{ country_name }}</h1>
+
+    <div class="row">
+        {% for vacation in vacation_options %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if vacation.image %}
+                <img src="{{ vacation.image.url }}" class="card-img-top" alt="{{ vacation.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ vacation.title }}</h5>
+                    {% if vacation.description %}
+                    <p class="card-text">{{ vacation.description }}</p>
+                    {% else %}
+                    <p class="text-muted">No description provided.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'home' %}" class="btn btn-link mt-3">
+        <i class="bi bi-arrow-left-circle"></i> Back to Home
+    </a>
+</div>
+{% endblock %}
