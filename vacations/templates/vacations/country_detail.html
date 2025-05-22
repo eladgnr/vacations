@@ -24,6 +24,10 @@
                         ✏️ Edit This Vacation
                     </a>
                     {% endif %}
+
+                    <a href="{% url 'choose_vacation' vacation.id %}" class="btn btn-success btn-sm mt-2">
+                        Click here to choose your vacation at {{ vacation.title }}
+                    </a>
                 </div>
             </div>
         </div>

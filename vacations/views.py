@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from .forms import CustomUserCreationForm
 
 
+@login_required
 def home(request):
     if not request.user.is_authenticated:
         return render(request, "vacations/landing.html")  # Landing for guests
@@ -34,6 +35,7 @@ def register(request):
     return render(request, "vacations/register.html", {"form": form})
 
 
+@login_required
 def country_detail(request, country_name):
     country = get_object_or_404(Country, name__iexact=country_name)
     vacation_options = country.vacations.all()
@@ -75,3 +77,9 @@ class VacationUpdateView(UserPassesTestMixin, UpdateView):
         messages.error(
             self.request, "Form is invalid. Please check your inputs ❌")
         return self.render_to_response(self.get_context_data(form=form))
+
+
+@login_required
+def choose_vacation(request, vacation_id):
+    vacation = get_object_or_404(Vacation, id=vacation_id)
+    return render(request, 'vacations/choose_vacation.html', {'vacation': vacation})
