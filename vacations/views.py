@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Country, Vacation
 from django.views.generic.edit import UpdateView
@@ -5,6 +6,32 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import UserPassesTestMixin
+from .forms import CustomUserCreationForm
+
+
+def home(request):
+    if not request.user.is_authenticated:
+        return render(request, "vacations/landing.html")  # Landing for guests
+    countries = Country.objects.all()
+    return render(request, "vacations/home.html", {"countries": countries})
+
+
+def register(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_staff = False
+            user.is_superuser = False
+            user.save()
+            messages.success(
+                request, "Account created successfully. You can now log in.")
+            return redirect("login")
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = CustomUserCreationForm()
+    return render(request, "vacations/register.html", {"form": form})
 
 
 def country_detail(request, country_name):
@@ -16,9 +43,8 @@ def country_detail(request, country_name):
     })
 
 
-def home(request):
-    countries = Country.objects.all()
-    return render(request, 'vacations/home.html', {'countries': countries})
+# def home(request):
+#    return render(request, "vacations/home.html")
 
 
 class VacationUpdateView(UserPassesTestMixin, UpdateView):

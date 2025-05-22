@@ -1,0 +1,10 @@
+{% extends "vacations/base.html" %}
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="mb-4">Welcome to the Vacation Site</h2>
+    <a class="btn btn-primary btn-lg me-3" href="{% url 'login' %}">Log In</a>
+    <a class="btn btn-success btn-lg" href="{% url 'register' %}">Sign Up</a>
+</div>
+{% endblock %}
