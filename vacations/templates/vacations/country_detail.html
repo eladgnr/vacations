@@ -19,6 +19,11 @@
                     {% else %}
                     <p class="text-muted">No description provided.</p>
                     {% endif %}
+                    {% if user.is_staff %}
+                    <a href="{% url 'vacation_edit' vacation.id %}" class="btn btn-outline-primary btn-sm mt-2">
+                        ✏️ Edit This Vacation
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
