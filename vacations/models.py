@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Country(models.Model):
@@ -18,3 +19,35 @@ class Vacation(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.country.name})"
+
+
+class VacationBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    vacation = models.ForeignKey('Vacation', on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    room_type = models.IntegerField(choices=[
+        (1, 'Single'),
+        (2, 'Double'),
+        (4, 'Family'),
+    ])
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.vacation.title} ({self.start_date} to {self.end_date})"
+
+
+class VacationBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    vacation = models.ForeignKey('Vacation', on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    room_type = models.IntegerField(choices=[
+        (1, 'Single'),
+        (2, 'Double'),
+        (4, 'Family'),
+    ])
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.vacation.title} ({self.start_date} to {self.end_date})"

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from .views import VacationUpdateView
+from vacations import views
 
 urlpatterns = [
     path('', views.home, name='home'),  # ✅ homepage
@@ -11,4 +12,5 @@ urlpatterns = [
          VacationUpdateView.as_view(), name='vacation_edit'),
     path('vacation/<int:vacation_id>/choose/',
          views.choose_vacation, name='choose_vacation'),
+    path('my-vacations/', views.my_vacations, name='my_vacations'),
 ]

@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .forms import CustomUserCreationForm
+from django.db import models
+from django.contrib.auth.models import User
+from .models import VacationBooking
 
 
 @login_required
@@ -48,7 +51,6 @@ def country_detail(request, country_name):
 # def home(request):
 #    return render(request, "vacations/home.html")
 
-
 class VacationUpdateView(UserPassesTestMixin, UpdateView):
     model = Vacation
     fields = ['title', 'description', 'image']
@@ -82,4 +84,52 @@ class VacationUpdateView(UserPassesTestMixin, UpdateView):
 @login_required
 def choose_vacation(request, vacation_id):
     vacation = get_object_or_404(Vacation, id=vacation_id)
-    return render(request, 'vacations/choose_vacation.html', {'vacation': vacation})
+    existing_booking = VacationBooking.objects.filter(
+        user=request.user, vacation=vacation).first()
+
+    if request.method == "POST":
+        if "delete_booking" in request.POST:
+            if existing_booking:
+                existing_booking.delete()
+                messages.success(request, "Vacation booking cancelled.")
+            return redirect("home")
+
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
+        room_type = request.POST.get("room_type")
+
+        if existing_booking:
+            existing_booking.start_date = start_date
+            existing_booking.end_date = end_date
+            existing_booking.room_type = room_type
+            existing_booking.save()
+            messages.success(request, "Vacation updated successfully.")
+        else:
+            VacationBooking.objects.create(
+                user=request.user,
+                vacation=vacation,
+                start_date=start_date,
+                end_date=end_date,
+                room_type=room_type
+            )
+            messages.success(request, "Vacation booked successfully.")
+
+        return redirect("home")
+
+    return render(request, 'vacations/choose_vacation.html', {
+        'vacation': vacation,
+        'existing_booking': existing_booking
+    })
+
+@login_required
+def my_vacations(request):
+    bookings = VacationBooking.objects.filter(user=request.user).select_related('vacation')
+
+    if request.method == "POST":
+        booking_id = request.POST.get("delete_booking_id")
+        if booking_id:
+            VacationBooking.objects.filter(id=booking_id, user=request.user).delete()
+
+    return render(request, 'vacations/my_vacations.html', {
+        'bookings': bookings
+    })
