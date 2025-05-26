@@ -10,14 +10,24 @@ from .forms import CustomUserCreationForm
 from django.db import models
 from django.contrib.auth.models import User
 from .models import VacationBooking
+from .utils import get_country_weather
 
 
 @login_required
 def home(request):
     if not request.user.is_authenticated:
         return render(request, "vacations/landing.html")  # Landing for guests
+
     countries = Country.objects.all()
-    return render(request, "vacations/home.html", {"countries": countries})
+    countries_with_weather = []
+
+    for country in countries:
+        weather = get_country_weather(country.name)
+        countries_with_weather.append((country, weather))
+
+    return render(request, "vacations/home.html", {
+        'countries_with_weather': countries_with_weather
+    })
 
 
 def register(request):
@@ -121,14 +131,17 @@ def choose_vacation(request, vacation_id):
         'existing_booking': existing_booking
     })
 
+
 @login_required
 def my_vacations(request):
-    bookings = VacationBooking.objects.filter(user=request.user).select_related('vacation')
+    bookings = VacationBooking.objects.filter(
+        user=request.user).select_related('vacation')
 
     if request.method == "POST":
         booking_id = request.POST.get("delete_booking_id")
         if booking_id:
-            VacationBooking.objects.filter(id=booking_id, user=request.user).delete()
+            VacationBooking.objects.filter(
+                id=booking_id, user=request.user).delete()
 
     return render(request, 'vacations/my_vacations.html', {
         'bookings': bookings
