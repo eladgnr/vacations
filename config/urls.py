@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
     path('', include('vacations.urls')),
+    path('api/', include('vacations.api_urls')),
 ]
 
 if settings.DEBUG:

@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'vacations',  # Your app name
+    'vacations',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
