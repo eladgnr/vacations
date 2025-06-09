@@ -13,4 +13,6 @@ urlpatterns = [
     path('vacation/<int:vacation_id>/choose/',
          views.choose_vacation, name='choose_vacation'),
     path('my-vacations/', views.my_vacations, name='my_vacations'),
+    path('vacations/<int:vacation_id>/like/',
+         views.vacation_like, name='vacation_like'),
 ]

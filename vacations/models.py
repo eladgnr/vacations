@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User  # Make sure this is at the top
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -51,3 +52,16 @@ class VacationBooking(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.vacation.title} ({self.start_date} to {self.end_date})"
+
+
+class VacationLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    vacation = models.ForeignKey(Vacation, on_delete=models.CASCADE)
+    is_like = models.BooleanField()  # True = like, False = unlike
+
+    class Meta:
+        # Prevent multiple likes/unlikes per vacation per user
+        unique_together = ('user', 'vacation')
+
+    def __str__(self):
+        return f"{self.user.username} {'liked' if self.is_like else 'unliked'} {self.vacation.title}"

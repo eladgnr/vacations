@@ -9,9 +9,32 @@
         {% for vacation in vacation_options %}
         <div class="col-md-6 mb-4">
             <div class="card h-100 shadow-sm">
-                {% if vacation.image %}
-                <img src="{{ vacation.image.url }}" class="card-img-top" alt="{{ vacation.title }}">
-                {% endif %}
+                <div class="position-relative">
+                    {% if vacation.image %}
+                    <img src="{{ vacation.image.url }}" class="card-img-top" alt="{{ vacation.title }}">
+                    {% endif %}
+
+                    <!-- Likes/Unlikes Counter (top-right) -->
+                    <div class="position-absolute top-0 end-0 m-2 p-1 bg-light border rounded text-center small"
+                        style="width: 60px;">
+                        <div>👍 {{ vacation.likes }}</div>
+                        <div>👎 {{ vacation.unlikes }}</div>
+                    </div>
+
+                    <!-- Vote Buttons (bottom-left with grey box) -->
+                    <div class="position-absolute bottom-0 start-0 m-2 p-1 bg-light border rounded text-center">
+                        <form method="post" action="{% url 'vacation_like' vacation.id %}">
+                            {% csrf_token %}
+                            <button type="submit" name="is_like" value="true"
+                                class="btn btn-sm me-1 {% if vacation.user_vote is True %}btn-success{% else %}btn-outline-success{% endif %}">👍</button>
+                            <button type="submit" name="is_like" value="false"
+                                class="btn btn-sm {% if vacation.user_vote is False %}btn-danger{% else %}btn-outline-danger{% endif %}">👎</button>
+                        </form>
+                    </div>
+
+
+
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ vacation.title }}</h5>
                     {% if vacation.description %}

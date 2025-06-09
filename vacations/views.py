@@ -11,6 +11,38 @@ from django.db import models
 from django.contrib.auth.models import User
 from .models import VacationBooking
 from .utils import get_country_weather
+from .models import Vacation, VacationLike
+from django.views.decorators.http import require_POST
+from .models import Vacation, VacationLike
+from django.contrib import messages
+
+
+@require_POST
+@login_required
+def vacation_like(request, vacation_id):
+    # Only non-admins can vote
+    if request.user.is_staff:
+        messages.error(request, "Admins cannot vote.")
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+    vacation = get_object_or_404(Vacation, id=vacation_id)
+    is_like = request.POST.get('is_like') == 'true'
+
+    # Check if user has already voted for this vacation
+    existing_vote = VacationLike.objects.filter(
+        user=request.user, vacation=vacation).first()
+
+    if existing_vote:
+        # Update the existing vote only if it's different
+        if existing_vote.is_like != is_like:
+            existing_vote.is_like = is_like
+            existing_vote.save()
+    else:
+        # Create a new vote
+        VacationLike.objects.create(
+            user=request.user, vacation=vacation, is_like=is_like)
+
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required
@@ -48,18 +80,28 @@ def register(request):
     return render(request, "vacations/register.html", {"form": form})
 
 
-@login_required
+# @login_required
 def country_detail(request, country_name):
     country = get_object_or_404(Country, name__iexact=country_name)
     vacation_options = country.vacations.all()
+
+    for vacation in vacation_options:
+        vacation.likes = VacationLike.objects.filter(
+            vacation=vacation, is_like=True).count()
+        vacation.unlikes = VacationLike.objects.filter(
+            vacation=vacation, is_like=False).count()
+
+        # ✅ Get this user's vote if exists
+        user_vote = VacationLike.objects.filter(
+            vacation=vacation, user=request.user
+        ).first()
+        vacation.user_vote = user_vote.is_like if user_vote else None
+
     return render(request, 'vacations/country_detail.html', {
         'country_name': country.name,
         'vacation_options': vacation_options
     })
 
-
-# def home(request):
-#    return render(request, "vacations/home.html")
 
 class VacationUpdateView(UserPassesTestMixin, UpdateView):
     model = Vacation
