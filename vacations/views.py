@@ -1,3 +1,6 @@
+from .forms import CustomUserCreationForm  # adjust import path if needed
+from django.shortcuts import render, redirect
+from django.contrib.auth import login  # <-- add this import
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Country, Vacation
@@ -70,9 +73,15 @@ def register(request):
             user.is_staff = False
             user.is_superuser = False
             user.save()
+
+            login(request, user)  # <-- this logs the user in immediately
+
             messages.success(
-                request, "Account created successfully. You can now log in.")
-            return redirect("login")
+                request,
+                "Registration completed successfully. you are now logged in! 😊"
+            )
+            # <-- adjust this to your vacations home view name
+            return redirect("home")
         else:
             messages.error(request, "Please correct the errors below.")
     else:
@@ -80,7 +89,10 @@ def register(request):
     return render(request, "vacations/register.html", {"form": form})
 
 
+
 # @login_required
+
+
 def country_detail(request, country_name):
     country = get_object_or_404(Country, name__iexact=country_name)
     vacation_options = country.vacations.all()

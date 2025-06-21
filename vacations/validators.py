@@ -2,13 +2,13 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
 
-class FourDigitPasswordValidator:
+class MinimumLengthPasswordValidator:
     def validate(self, password, user=None):
-        if not (password.isdigit() and len(password) == 4):
+        if len(password) < 4:
             raise ValidationError(
-                _("Your password must contain exactly 4 digits."),
-                code='password_must_be_4_digits',
+                _("Your password must be at least 4 characters long."),
+                code='password_too_short',
             )
 
     def get_help_text(self):
-        return _("Your password must contain exactly 4 digits.")
+        return _("Your password must be at least 4 characters long.")

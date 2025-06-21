@@ -87,7 +87,7 @@ AUTH_PASSWORD_VALIDATORS = [
     #    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     # },
     {
-        'NAME': 'vacations.validators.FourDigitPasswordValidator',
+        'NAME': 'vacations.validators.MinimumLengthPasswordValidator',
     },
 
 ]
