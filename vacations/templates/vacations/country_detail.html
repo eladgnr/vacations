@@ -23,6 +23,9 @@
 
                     <!-- Vote Buttons (bottom-left with grey box) -->
                     <div class="position-absolute bottom-0 start-0 m-2 p-1 bg-light border rounded text-center">
+                        {% if user.is_authenticated %}
+                        {% if not user.is_staff %}
+
                         <form method="post" action="{% url 'vacation_like' vacation.id %}">
                             {% csrf_token %}
                             <button type="submit" name="is_like" value="true"
@@ -30,7 +33,12 @@
                             <button type="submit" name="is_like" value="false"
                                 class="btn btn-sm {% if vacation.user_vote is False %}btn-danger{% else %}btn-outline-danger{% endif %}">👎</button>
                         </form>
+                        {% else %}
+                        <div class="text-muted small">Admins cannot vote</div>
+                        {% endif %}
+                        {% endif %}
                     </div>
+
 
 
 
@@ -43,10 +51,11 @@
                     <p class="text-muted">No description provided.</p>
                     {% endif %}
                     {% if user.is_staff %}
-                    <a href="{% url 'vacation_edit' vacation.id %}" class="btn btn-outline-primary btn-sm mt-2">
+                    <a href="/admin/vacations/vacation/" class="btn btn-outline-primary btn-sm mt-2">
                         ✏️ Edit This Vacation
                     </a>
                     {% endif %}
+
 
                     <a href="{% url 'choose_vacation' vacation.id %}" class="btn btn-success btn-sm mt-2">
                         Click here to choose your vacation at {{ vacation.title }}

@@ -1,30 +1,23 @@
-from .forms import CustomUserCreationForm  # adjust import path if needed
-from django.shortcuts import render, redirect
-from django.contrib.auth import login  # <-- add this import
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
-from .models import Country, Vacation
-from django.views.generic.edit import UpdateView
-from django.urls import reverse_lazy
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.contrib.auth.mixins import UserPassesTestMixin
-from .forms import CustomUserCreationForm
-from django.db import models
-from django.contrib.auth.models import User
-from .models import VacationBooking
-from .utils import get_country_weather
-from .models import Vacation, VacationLike
 from django.views.decorators.http import require_POST
-from .models import Vacation, VacationLike
+from django.views.generic.edit import UpdateView
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.urls import reverse_lazy
+
+from django.contrib.auth.models import User
+from .models import Country, Vacation, VacationLike, VacationBooking
+from .forms import CustomUserCreationForm
+from .utils import get_country_weather
 
 
 @require_POST
 @login_required
 def vacation_like(request, vacation_id):
     # Only non-admins can vote
-    if request.user.is_staff:
+    if hasattr(request.user, 'job_id') and request.user.job_id == 2:
         messages.error(request, "Admins cannot vote.")
         return redirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -87,7 +80,6 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, "vacations/register.html", {"form": form})
-
 
 
 # @login_required

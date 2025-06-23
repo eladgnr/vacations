@@ -25,9 +25,17 @@
     {% if user.is_authenticated %}
     <div class="d-flex justify-content-end align-items-center p-2 pe-4 bg-light text-secondary gap-3">
         Logged in as: <strong>{{ user.username }}</strong>
+
         <a href="{% url 'my_vacations' %}" class="btn btn-outline-info btn-sm">My Vacations</a>
+
+        {% if user.is_staff %}
+        <a href="/admin/vacations/vacation/add/" class="btn btn-warning btn-sm">
+            ➕ Add New Vacation
+        </a>
+        {% endif %}
     </div>
     {% endif %}
+
 
     <!-- Sign Out button for logged-in users -->
     {% if user.is_authenticated %}
