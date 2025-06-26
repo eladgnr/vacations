@@ -1,3 +1,4 @@
+from datetime import date  # ✅ Make sure this is at the top
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -6,7 +7,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
-
+from datetime import date
 from django.contrib.auth.models import User
 from .models import Country, Vacation, VacationLike, VacationBooking
 from .forms import CustomUserCreationForm
@@ -42,9 +43,42 @@ def vacation_like(request, vacation_id):
 
 
 @login_required
+@require_POST
+def order_vacation(request, vacation_id):
+    vacation = get_object_or_404(Vacation, id=vacation_id)
+
+    # Prevent duplicate bookings
+    if VacationBooking.objects.filter(user=request.user, vacation=vacation).exists():
+        messages.info(
+            request, f"You already ordered the vacation at {vacation.title}.")
+    else:
+        VacationBooking.objects.create(
+            user=request.user,
+            vacation=vacation,
+            start_date=None,
+            end_date=None,
+            room_type=None
+        )
+        messages.success(
+            request, f"Vacation at {vacation.title} has been ordered! 🎉")
+
+    return redirect('country_detail', country_name=vacation.country.name)
+
+
+@login_required
+def delete_vacation(request, vacation_id):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    vacation = get_object_or_404(Vacation, id=vacation_id)
+    vacation.delete()
+    return redirect('home')
+
+
 def home(request):
     if not request.user.is_authenticated:
-        return render(request, "vacations/landing.html")  # Landing for guests
+        # ✅ This must trigger for guests
+        return render(request, "vacations/landing.html")
 
     countries = Country.objects.all()
     countries_with_weather = []
@@ -54,7 +88,8 @@ def home(request):
         countries_with_weather.append((country, weather))
 
     return render(request, "vacations/home.html", {
-        'countries_with_weather': countries_with_weather
+        'countries_with_weather': countries_with_weather,
+        'today': date.today()
     })
 
 
@@ -85,25 +120,25 @@ def register(request):
 # @login_required
 
 
+@login_required
 def country_detail(request, country_name):
     country = get_object_or_404(Country, name__iexact=country_name)
     vacation_options = country.vacations.all()
 
     for vacation in vacation_options:
+
         vacation.likes = VacationLike.objects.filter(
             vacation=vacation, is_like=True).count()
         vacation.unlikes = VacationLike.objects.filter(
             vacation=vacation, is_like=False).count()
-
-        # ✅ Get this user's vote if exists
         user_vote = VacationLike.objects.filter(
-            vacation=vacation, user=request.user
-        ).first()
+            vacation=vacation, user=request.user).first()
         vacation.user_vote = user_vote.is_like if user_vote else None
 
     return render(request, 'vacations/country_detail.html', {
         'country_name': country.name,
-        'vacation_options': vacation_options
+        'vacation_options': vacation_options,
+        'today': date.today()  # ✅ This is critical
     })
 
 

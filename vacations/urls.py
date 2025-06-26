@@ -15,4 +15,8 @@ urlpatterns = [
     path('my-vacations/', views.my_vacations, name='my_vacations'),
     path('vacations/<int:vacation_id>/like/',
          views.vacation_like, name='vacation_like'),
+    path('vacation/delete/<int:vacation_id>/',
+         views.delete_vacation, name='delete_vacation'),
+    path('vacation/order/<int:vacation_id>/',
+         views.order_vacation, name='order_vacation'),
 ]
