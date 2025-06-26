@@ -76,10 +76,6 @@ def delete_vacation(request, vacation_id):
 
 
 def home(request):
-    if not request.user.is_authenticated:
-        # ✅ This must trigger for guests
-        return render(request, "vacations/landing.html")
-
     countries = Country.objects.all()
     countries_with_weather = []
 
@@ -88,8 +84,7 @@ def home(request):
         countries_with_weather.append((country, weather))
 
     return render(request, "vacations/home.html", {
-        'countries_with_weather': countries_with_weather,
-        'today': date.today()
+        'countries_with_weather': countries_with_weather
     })
 
 
