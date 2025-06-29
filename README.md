@@ -1,79 +1,40 @@
-# 🌴 Django Elad Vacation Site Project
+# Django Elad Vacation Site Project
+----------------------------------
 
-A vacation browsing & booking app built with Django and PostgreSQL.
-
----
-
-## 🚀 Getting Started
-
-### 1. Install dependencies:
-
+## 1. Clone the Project
 ```bash
+git clone https://github.com/eladgnr/vacations
+cd <project-folder>  # insert the path you want the project
+2. Install Python Dependencies
+
 pip install -r requirements.txt
-```
+3. Install PostgreSQL and Set Up the Database
 
----
+CREATE DATABASE vacations_db;
+CREATE USER admin WITH PASSWORD '1234';
+GRANT ALL PRIVILEGES ON DATABASE vacations_db TO admin;
+4. Run Migrations
 
-### 2. Configure the PostgreSQL database
-
-In `settings.py`, the default DB config is:
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vacations_db',
-        'USER': 'admin',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
-
-Make sure PostgreSQL is running, and the database `vacations_db` exists with a user `admin` (password `1234`).
-
----
-
-### 3. Run migrations
-
-```bash
 python manage.py migrate
-```
+5. Create Sample Users
+a. Run the shell:
 
----
+python manage.py shell
+b. Then paste the following:
 
-### 4. Start the server
+from django.contrib.auth.models import User
+User.objects.create_superuser(username='admin', email='admin@example.com', password='1234')
+User.objects.create_user(username='amos', email='amos@example.com', password='1234')
+exit()
+6. Run the Server
 
-```bash
 python manage.py runserver
-```
+Then visit: http://127.0.0.1:8000/
 
-Then visit: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+Sample Users
+Username	Password	Role
+admin	1234	Superuser
+amos	1234	Regular user
 
----
-
-## Sample Users
-
-- **Admin user**  
-  `username: admin`  
-  `password: 1234`
-
-- **Regular user**  
-  `username: amos`  
-  `password: 1234`
-
----
-
-## Run Tests
-
-```bash
+If You Want to Run Tests
 python manage.py test
-```
-
----
-
-## Notes
-
-- Images and uploads are stored in the `media/` folder.
-- Do **not** upload your `venv/` (virtual environment) folder when sharing the project.

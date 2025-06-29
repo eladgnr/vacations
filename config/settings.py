@@ -62,9 +62,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vacations_db',
-        'USER': 'admin',           # or 'vacation_user'
+        'USER': 'admin',
         'PASSWORD': '1234',
-        'HOST': 'localhost',  # or 'db' if using Docker
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
