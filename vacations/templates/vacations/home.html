@@ -7,20 +7,12 @@
 <div class="container mt-5">
     <h1>The vacation site</h1>
     <div class="row">
-        {% for country, weather in countries_with_weather %}
+        {% for country in countries %}
         <div class="col-md-4">
             <div class="card my-3">
                 <img src="{{ country.image.url }}" class="card-img-top country-image" alt="{{ country.name }}">
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ country.name }}</h5>
-
-                    {% if weather %}
-                    <p class="card-text">
-                        🌤️ {{ weather.temp_c }}°C – {{ weather.condition }}
-                    </p>
-                    {% else %}
-                    <p class="text-muted">Weather data not available.</p>
-                    {% endif %}
 
                     <a href="{% url 'country_detail' country_name=country.name %}" class="btn btn-primary">
                         View Vacations

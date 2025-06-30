@@ -77,14 +77,8 @@ def delete_vacation(request, vacation_id):
 
 def home(request):
     countries = Country.objects.all()
-    countries_with_weather = []
-
-    for country in countries:
-        weather = get_country_weather(country.name)
-        countries_with_weather.append((country, weather))
-
     return render(request, "vacations/home.html", {
-        'countries_with_weather': countries_with_weather
+        'countries': countries
     })
 
 
