@@ -1,0 +1,56 @@
+🔹 Step 1: Clone the Project
+
+git clone https://github.com/eladgnr/vacations
+cd vacations
+🔹 Step 2: Create & Activate Virtual Environment
+
+python -m venv venv
+.\venv\Scripts\activate
+🔹 Step 3: Install Requirements
+
+pip install -r requirements.txt
+🔹 Step 4: Create PostgreSQL Database and User
+
+psql -U postgres
+Then run:
+
+
+CREATE DATABASE vacations_db;
+CREATE USER admin WITH PASSWORD '1234';
+GRANT ALL PRIVILEGES ON DATABASE vacations_db TO admin;
+\q
+🔹 Step 5: Run Migrations
+
+python manage.py migrate
+🔹 Step 6: Load Data Fixture
+
+python manage.py loaddata data.json
+🔹 Step 7: Create Admin User
+
+python manage.py createsuperuser
+Fill in:
+
+Username: admin
+
+Password: 1234
+
+Email: admin@example.com
+
+🔹 Step 8: Create Regular User (amos)
+
+python manage.py shell
+Paste this in the shell:
+
+
+from django.contrib.auth.models import User
+User.objects.create_user(username='amos', email='amos@email.com', password='1234')
+exit()
+🔹 Step 9: Start the Server
+
+python manage.py runserver
+Open in browser:
+
+Website: http://127.0.0.1:8000/
+
+Admin: http://127.0.0.1:8000/admin
+

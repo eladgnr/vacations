@@ -47,3 +47,57 @@ amos	1234	Regular user
 If You Want to Run Tests
 
 python manage.py test
+
+
+
+###
+✅ Django Project Setup from GitHub (Step-by-Step)
+Step 1: Clone the Project
+
+git clone https://github.com/eladgnr/vacations
+cd vacations
+Step 2: Create & Activate Virtual Environment
+python -m venv venv
+Activate:
+
+
+.\venv\Scripts\activate    # For PowerShell
+Step 3: Install Requirements
+
+pip install -r requirements.txt
+Step 4: Create PostgreSQL Database and User
+
+psql -U postgres
+Then run:
+
+
+CREATE DATABASE vacations_db;
+CREATE USER admin WITH PASSWORD '1234';
+GRANT ALL PRIVILEGES ON DATABASE vacations_db TO admin;
+\q
+Step 5: Run Migrations
+
+python manage.py migrate
+Step 6: Load Data Fixture
+
+python manage.py loaddata data.json
+Step 7: Create Admin User
+
+python manage.py createsuperuser
+Fill in:
+
+Username: admin
+
+Password: 1234
+
+Email: anything
+
+Step 8: Start the Server
+
+python manage.py runserver
+Open:
+
+Website: http://127.0.0.1:8000/
+
+Admin: http://127.0.0.1:8000/admin
+###
