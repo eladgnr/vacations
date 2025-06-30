@@ -6,29 +6,26 @@
     <h2 class="mb-4">My Booked Vacations</h2>
 
     {% if bookings %}
-        <div class="list-group">
-            {% for booking in bookings %}
-                <div class="list-group-item mb-3 shadow-sm">
-                    <h5>{{ booking.vacation.title }}</h5>
-                    <p>
-                        From <strong>{{ booking.start_date }}</strong> to <strong>{{ booking.end_date }}</strong><br>
-                        Room for <strong>{{ booking.room_type }}</strong> person(s)
-                    </p>
-                    <div class="d-flex gap-3">
-                        <a href="{% url 'choose_vacation' booking.vacation.id %}" class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
-                        <form method="post" class="d-inline">
-                            {% csrf_token %}
-                            <input type="hidden" name="delete_booking_id" value="{{ booking.id }}">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            {% endfor %}
+    <div class="list-group">
+        {% for booking in bookings %}
+        <div class="list-group-item mb-3 shadow-sm">
+            <h5>{{ booking.vacation.title }}</h5>
+
+            <div class="d-flex gap-3">
+                <a href="{% url 'choose_vacation' booking.vacation.id %}" class="btn btn-warning btn-sm">
+                    Edit
+                </a>
+                <form method="post" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_booking_id" value="{{ booking.id }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </div>
         </div>
+        {% endfor %}
+    </div>
     {% else %}
-        <p class="text-muted">You haven’t booked any vacations yet.</p>
+    <p class="text-muted">You haven’t booked any vacations yet.</p>
     {% endif %}
 </div>
 {% endblock %}
