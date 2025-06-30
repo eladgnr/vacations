@@ -1,7 +1,5 @@
 {% extends "vacations/base.html" %}
-{% load compare %}
 {% block title %}Choose Your Vacation{% endblock %}
-
 
 {% block content %}
 <div class="container py-5">
@@ -15,46 +13,12 @@
 
     {% if existing_booking %}
     <div class="alert alert-info">
-        You already booked this vacation from <strong>{{ existing_booking.start_date }}</strong>
-        to <strong>{{ existing_booking.end_date }}</strong> for
-        <strong>{{ existing_booking.room_type }} person(s)</strong>.
+        You already booked this vacation.
     </div>
     {% endif %}
 
     <form method="post">
         {% csrf_token %}
-
-        <div class="mb-3">
-            <label for="start_date" class="form-label">Start Date</label>
-            <input type="date" id="start_date" name="start_date" class="form-control"
-                value="{{ existing_booking.start_date|default:'' }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="end_date" class="form-label">End Date (at least 2 days after start)</label>
-            <input type="date" id="end_date" name="end_date" class="form-control"
-                value="{{ existing_booking.end_date|default:'' }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="room_type" class="form-label">Room Type</label>
-            <select id="room_type" name="room_type" class="form-select" required>
-                <option value="">-- Select --</option>
-
-                {% if existing_booking %}
-                {% with existing_booking.room_type as rt %}
-                <option value="1" {% if rt|equals:"1" %}selected{% endif %}>Single</option>
-                <option value="2" {% if rt|equals:"2" %}selected{% endif %}>2 Persons</option>
-                <option value="4" {% if rt|equals:"4" %}selected{% endif %}>4 Persons</option>
-                {% endwith %}
-                {% else %}
-                <option value="1">Single</option>
-                <option value="2">2 Persons</option>
-                <option value="4">4 Persons</option>
-                {% endif %}
-            </select>
-        </div>
-
         <button type="submit" class="btn btn-primary">Save Vacation</button>
     </form>
 
@@ -66,28 +30,4 @@
     </form>
     {% endif %}
 </div>
-
-<script>
-    // Restrict date selection from today to 6 months ahead
-    const today = new Date();
-    const sixMonthsLater = new Date();
-    sixMonthsLater.setMonth(today.getMonth() + 6);
-
-    const formatDate = (d) => d.toISOString().split('T')[0];
-
-    const startInput = document.getElementById('start_date');
-    const endInput = document.getElementById('end_date');
-
-    startInput.setAttribute('min', formatDate(today));
-    startInput.setAttribute('max', formatDate(sixMonthsLater));
-    endInput.setAttribute('min', formatDate(today));
-    endInput.setAttribute('max', formatDate(sixMonthsLater));
-
-    startInput.addEventListener('change', function () {
-        const start = new Date(this.value);
-        const minEnd = new Date(start);
-        minEnd.setDate(start.getDate() + 2);  // At least 2 days later
-        endInput.setAttribute('min', formatDate(minEnd));
-    });
-</script>
 {% endblock %}

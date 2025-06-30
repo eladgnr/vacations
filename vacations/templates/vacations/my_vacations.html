@@ -3,6 +3,8 @@
 
 {% block content %}
 <div class="container py-4">
+
+
     <h2 class="mb-4">My Booked Vacations</h2>
 
     {% if bookings %}
@@ -27,5 +29,13 @@
     {% else %}
     <p class="text-muted">You haven’t booked any vacations yet.</p>
     {% endif %}
+
 </div>
+<div class="mt-3">
+    <a href="{% url 'home' %}" class="btn btn-link">
+        <i class="bi bi-arrow-left-circle"></i> Back to Home
+    </a>
+</div>
+
+
 {% endblock %}
