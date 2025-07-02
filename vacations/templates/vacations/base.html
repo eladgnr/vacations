@@ -30,27 +30,25 @@
         {% if user.is_authenticated %}
         Logged in as: <strong>{{ user.username }}</strong>
 
+        {% if not user.is_superuser %}
         <a href="{% url 'my_vacations' %}" class="btn btn-outline-info btn-sm">My Vacations</a>
+        {% endif %}
 
         {% if user.is_superuser %}
         <a href="{% url 'add_vacation' %}" class="btn btn-success btn-sm">
             ➕ Add New Vacation
         </a>
         {% endif %}
+
+        <form method="post" action="{% url 'logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm">Sign Out</button>
+        </form>
         {% else %}
         <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Login</a>
         <a href="{% url 'register' %}" class="btn btn-outline-success btn-sm">Register</a>
         {% endif %}
     </div>
-    <!-- Sign Out button -->
-    {% if user.is_authenticated %}
-    <div class="container mt-3 text-end">
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger btn-sm">Sign Out</button>
-        </form>
-    </div>
-    {% endif %}
 
     <!-- Messages -->
     {% if messages %}
