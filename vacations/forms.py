@@ -1,4 +1,5 @@
 from django import forms
+from .models import Vacation
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -26,3 +27,19 @@ class CustomUserCreationForm(UserCreationForm):
             raise ValidationError(
                 "Password must be at least 4 characters long.")
         return password
+
+
+class VacationForm(forms.ModelForm):
+    class Meta:
+        model = Vacation
+        fields = ['title', 'description', 'image',
+                  'price', 'start_date', 'end_date', 'country']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'country': forms.Select(attrs={'class': 'form-select'}),
+        }

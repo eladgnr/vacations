@@ -16,10 +16,10 @@ class Country(models.Model):
 class Vacation(models.Model):
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='vacations')
-    title = models.CharField(max_length=200)  # ✅ required
-    description = models.TextField()          # ✅ required (remove blank=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
     image = models.ImageField(
-        upload_to='vacation_images/', blank=True)  # ✅ optional
+        upload_to='vacation_images/', blank=True)
 
     price = models.DecimalField(
         max_digits=8,
@@ -29,8 +29,8 @@ class Vacation(models.Model):
             MaxValueValidator(10000.00)
         ]
     )
-    start_date = models.DateField()  # ✅ required (remove null=True, blank=True)
-    end_date = models.DateField()    # ✅ required (remove null=True, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
 
     def clean(self):
         if self.start_date and self.end_date and self.end_date < self.start_date:

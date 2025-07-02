@@ -3,7 +3,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-$xonqx_7^*lk9p^b_kb(w=wup-23=s**&2*9)!$9x6+3luf+26'
 
@@ -11,7 +10,6 @@ SECRET_KEY = 'django-insecure-$xonqx_7^*lk9p^b_kb(w=wup-23=s**&2*9)!$9x6+3luf+26
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -66,14 +64,11 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'vacations.validators.MinimumLengthPasswordValidator',
     },
-
 ]
-
 
 LANGUAGE_CODE = 'en-us'
 
@@ -83,15 +78,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "vacations" / "static"]
 
-
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media files (user-uploaded content like country images)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'

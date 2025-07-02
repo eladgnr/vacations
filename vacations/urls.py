@@ -19,4 +19,6 @@ urlpatterns = [
          views.delete_vacation, name='delete_vacation'),
     path('vacation/order/<int:vacation_id>/',
          views.order_vacation, name='order_vacation'),
+    path('add-vacation/', views.add_vacation, name='add_vacation'),
+
 ]

@@ -1,0 +1,56 @@
+{% extends "vacations/base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4 mt-5 w-100">
+            <h2 class="mb-4 text-center">Add a New Vacation</h2>
+
+            <form method="post" enctype="multipart/form-data" class="row g-3">
+                {% csrf_token %}
+
+                <div class="col-md-6">
+                    <label for="id_title" class="form-label">Title</label>
+                    {{ form.title }}
+                </div>
+
+                <div class="col-md-12">
+                    <label for="id_description" class="form-label">Description</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="id_image" class="form-label">Image</label>
+                    {{ form.image }}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="id_price" class="form-label">Price</label>
+                    {{ form.price }}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="id_start_date" class="form-label">Start Date</label>
+                    {{ form.start_date }}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="id_end_date" class="form-label">End Date</label>
+                    {{ form.end_date }}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="id_country" class="form-label">Country</label>
+                    {{ form.country }}
+                </div>
+
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary">💾 Save Vacation</button>
+                    <a href="{% url 'home' %}" class="btn btn-link ms-3">← Back to Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

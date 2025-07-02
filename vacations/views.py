@@ -1,3 +1,7 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import VacationForm
+from .models import Vacation
+from django.shortcuts import render, redirect
 from datetime import date  # ✅ Make sure this is at the top
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
@@ -12,6 +16,7 @@ from django.contrib.auth.models import User
 from .models import Country, Vacation, VacationLike, VacationBooking
 from .forms import CustomUserCreationForm
 from .utils import get_country_weather
+from .forms import VacationForm
 
 
 @require_POST
@@ -216,3 +221,20 @@ def my_vacations(request):
     return render(request, 'vacations/my_vacations.html', {
         'bookings': bookings
     })
+
+
+def is_admin(user):
+    return user.is_superuser  # You can customize this logic
+
+
+@login_required
+@user_passes_test(is_admin)
+def add_vacation(request):
+    if request.method == 'POST':
+        form = VacationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # or another page like 'country_detail'
+    else:
+        form = VacationForm()
+    return render(request, 'vacations/add_vacation.html', {'form': form})
