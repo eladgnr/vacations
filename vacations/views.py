@@ -18,6 +18,9 @@ from .forms import CustomUserCreationForm
 from .utils import get_country_weather
 from .forms import VacationForm
 
+""" This module contains views for the Vacations app.
+It includes views for displaying countries, vacation details, booking vacations,"""
+
 
 @require_POST
 @login_required

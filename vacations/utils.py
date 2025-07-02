@@ -1,5 +1,7 @@
-# vacations/utils.py
 import requests
+
+""" This module contains utility functions for the Vacations app.
+It includes functions to fetch weather data for a given country."""
 
 
 def get_country_weather(country_name):

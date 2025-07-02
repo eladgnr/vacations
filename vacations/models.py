@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 
+""" Models for the Vacations app.
+This module defines the data models for countries, vacations, bookings, and likes."""
+
 
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True)

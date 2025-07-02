@@ -3,6 +3,9 @@ from . import views
 from .views import VacationUpdateView
 from vacations import views
 
+""" URL patterns for the Vacations app.
+This module defines the URL patterns for the Vacations app, including views for"""
+
 urlpatterns = [
     path('', views.home, name='home'),  # ✅ homepage
     path('register/', views.register, name='register'),

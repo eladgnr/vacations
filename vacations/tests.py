@@ -6,9 +6,17 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from .models import Vacation
 
+"""
+Unit and integration tests for the Vacations app.
+
+Includes:
+- Access control tests for authenticated and unauthenticated views
+- Functional tests for protected pages
+- API tests using Django REST Framework's APIClient
+"""
+
+
 # Test That Does NOT Require Login
-
-
 def test_home_page_redirects_to_login(self):
     response = self.client.get('/')
     self.assertEqual(response.status_code, 302)

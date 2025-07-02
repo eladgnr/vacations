@@ -1,6 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
+""" This module contains validators for the Vacations app.
+It includes a minimum length password validator."""
+
 
 class MinimumLengthPasswordValidator:
     def validate(self, password, user=None):
