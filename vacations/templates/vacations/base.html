@@ -26,8 +26,8 @@
 </head>
 
 <body>
-    {% if user.is_authenticated %}
     <div class="d-flex justify-content-end align-items-center p-2 pe-4 bg-light text-secondary gap-3">
+        {% if user.is_authenticated %}
         Logged in as: <strong>{{ user.username }}</strong>
 
         <a href="{% url 'my_vacations' %}" class="btn btn-outline-info btn-sm">My Vacations</a>
@@ -37,9 +37,11 @@
             ➕ Add New Vacation
         </a>
         {% endif %}
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-outline-success btn-sm">Register</a>
+        {% endif %}
     </div>
-    {% endif %}
-
     <!-- Sign Out button -->
     {% if user.is_authenticated %}
     <div class="container mt-3 text-end">
