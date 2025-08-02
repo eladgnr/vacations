@@ -7,10 +7,13 @@ cd <project Folder Path>
 
 🔹 Step 2: Create & Activate Virtual Environment
 python -m venv venv
-.\venv\Scripts\activate  # For Windows
+#if thats doesnt work run - & "C:\Users\ELADG\AppData\Local\Programs\Python\Python313\python.exe" -m venv venv
+
+# if venv already installed, open bash teminal and run
+source venv/Scripts/activate # for windows
 source venv/bin/activate # For Mac
 
-🔹 Step 3: Install Requirements
+# if requirments not already installed
 pip install -r requirements.txt
 
 🔹 Step 4: Start the Server

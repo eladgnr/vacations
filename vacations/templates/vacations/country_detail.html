@@ -21,7 +21,7 @@
                 </div>
                 {% endif %}
 
-                <!-- 👍👎 Like/Unlike counters -->
+                <!-- Like/Unlike counters -->
                 {% if not user.is_staff %}
                 <div class="position-absolute top-0 end-0 m-2 p-1 bg-light border rounded text-center small"
                     style="width: 60px;">
@@ -30,7 +30,7 @@
                 </div>
                 {% endif %}
 
-                <!-- 👍👎 Buttons -->
+                <!-- Buttons -->
                 <div class="position-absolute bottom-0 start-0 m-2 p-1 bg-light border rounded text-center">
                     {% if user.is_authenticated %}
                     {% if not user.is_staff %}

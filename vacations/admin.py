@@ -4,7 +4,7 @@ from .models import Country, Vacation, VacationBooking
 from django.core.exceptions import ValidationError
 from datetime import date
 
-# 🔸 Step 1: Create a custom form to block past dates
+# Step 1: Create a custom form to block past dates
 
 
 class VacationAdminForm(forms.ModelForm):
@@ -24,7 +24,7 @@ class VacationAdminForm(forms.ModelForm):
             raise ValidationError("End date cannot be in the past.")
         return end
 
-# 🔸 Step 2: Attach the form to the Vacation admin
+# Step 2: Attach the form to the Vacation admin
 
 
 class VacationAdmin(admin.ModelAdmin):
@@ -32,7 +32,7 @@ class VacationAdmin(admin.ModelAdmin):
     list_display = ('title', 'country', 'start_date', 'end_date', 'price')
     search_fields = ('title', 'country__name')
 
-# 🔸 Step 3: Keep your existing booking admin
+# Step 3: Keep your existing booking admin
 
 
 @admin.register(VacationBooking)
@@ -41,7 +41,7 @@ class VacationBookingAdmin(admin.ModelAdmin):
     list_filter = ('room_type', 'start_date', 'end_date', 'vacation__country')
     search_fields = ('user__username', 'vacation__title')
 
-# 🔸 Step 4: Register Country and Vacation
+# Step 4: Register Country and Vacation
 
 
 class CountryAdmin(admin.ModelAdmin):
