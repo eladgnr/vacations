@@ -1,1 +1,846 @@
-[{"model": "vacations.country", "pk": 1, "fields": {"name": "Australia", "image": "images/aussie_flag.png"}}, {"model": "vacations.country", "pk": 2, "fields": {"name": "India", "image": "images/india_fleg.jpg"}}, {"model": "vacations.country", "pk": 3, "fields": {"name": "USA", "image": "images/USA_leg.png"}}, {"model": "vacations.country", "pk": 4, "fields": {"name": "Thiland", "image": "images/thi_fleg.png"}}, {"model": "vacations.country", "pk": 5, "fields": {"name": "Egypt", "image": "images/egypt_fleg.png"}}, {"model": "vacations.country", "pk": 6, "fields": {"name": "Canada", "image": "images/canada_fleg.jpg"}}, {"model": "vacations.country", "pk": 7, "fields": {"name": "French", "image": "images/french_fleg.png"}}, {"model": "vacations.country", "pk": 8, "fields": {"name": "Italy", "image": "images/Italy.jpg"}}, {"model": "vacations.country", "pk": 9, "fields": {"name": "Brazil", "image": "images/Brazil_fleg.png"}}, {"model": "vacations.country", "pk": 10, "fields": {"name": "Israel", "image": "images/israel.jpg"}}, {"model": "vacations.vacation", "pk": 1, "fields": {"country": 1, "title": "Sydney", "description": "Great place in the gold cost", "image": "vacation_images/Sydney.jpg", "price": "1850.00", "start_date": "2025-06-30", "end_date": "2025-07-24"}}, {"model": "vacations.vacation", "pk": 2, "fields": {"country": 1, "title": "Melbourne", "description": "Great city in Victoria", "image": "vacation_images/melbourne.jpg", "price": "1250.00", "start_date": "2025-08-13", "end_date": "2025-09-13"}}, {"model": "vacations.vacation", "pk": 3, "fields": {"country": 3, "title": "New York", "description": "come and visit The big Apple", "image": "vacation_images/new_york.webp", "price": "999.00", "start_date": "2025-09-10", "end_date": "2025-09-20"}}, {"model": "vacations.vacation", "pk": 4, "fields": {"country": 2, "title": "Taj Mahal", "description": "The Great Taj Mahal!", "image": "vacation_images/india1.jpg", "price": "780.00", "start_date": "2025-08-06", "end_date": "2025-08-25"}}, {"model": "vacations.vacation", "pk": 5, "fields": {"country": 4, "title": "BangKok", "description": "the great beach of thiland", "image": "vacation_images/bangkook.jpg", "price": "840.00", "start_date": "2025-08-19", "end_date": "2025-08-29"}}, {"model": "vacations.vacation", "pk": 6, "fields": {"country": 5, "title": "Cairo", "description": "come to see the pyramids", "image": "vacation_images/egypt1.jpg", "price": "450.00", "start_date": "2025-08-13", "end_date": "2025-08-20"}}, {"model": "vacations.vacation", "pk": 7, "fields": {"country": 6, "title": "Montreole", "description": "Enjoy the big city", "image": "vacation_images/montreal.jpg", "price": "920.00", "start_date": "2025-07-16", "end_date": "2025-07-25"}}, {"model": "vacations.vacation", "pk": 8, "fields": {"country": 7, "title": "Paris", "description": "Great food and wines", "image": "vacation_images/france1.jpg", "price": "800.00", "start_date": "2025-07-29", "end_date": "2025-08-29"}}, {"model": "vacations.vacation", "pk": 9, "fields": {"country": 8, "title": "Rome", "description": "come to see great art", "image": "vacation_images/italy2.jpg", "price": "750.00", "start_date": "2025-07-21", "end_date": "2025-07-27"}}, {"model": "vacations.vacation", "pk": 10, "fields": {"country": 9, "title": "Rio", "description": "Rock in rio", "image": "vacation_images/rio_de.jpg", "price": "699.00", "start_date": "2025-07-15", "end_date": "2025-07-25"}}, {"model": "vacations.vacation", "pk": 11, "fields": {"country": 10, "title": "Tel Aviv", "description": "a Non stop city", "image": "vacation_images/TLV.jpg", "price": "999.00", "start_date": "2025-07-23", "end_date": "2025-07-29"}}]
+[
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vacations",
+    "model": "country"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vacations",
+    "model": "vacation"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vacations",
+    "model": "vacationbooking"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "vacations",
+    "model": "vacationlike"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "sxccfs83wv3ojcyt1xfi4u8zjoeebgww",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hAodgSX7j0DmRkYqRpISrsy3l2bdKHb_977LxVxXUpce57jlNRZWXX43Qj5kesG0h3rrWludZkn0puid9r1taX8vOzu30HBXr71QDymYIJjDpjRBGbxeSBrAElIwEjyAB5YTuQyiUUnNIoPHo5ARr0_Ge45LQ:1uqyds:LLVnAqfa1GdJw8DaVG06N633IW83SAt-eYpnNI5IuBY",
+    "expire_date": "2025-09-09T18:43:36.767Z"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 1,
+  "fields": {
+    "name": "Australia",
+    "image": "images/aussie_flag.png"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 2,
+  "fields": {
+    "name": "India",
+    "image": "images/india_fleg.jpg"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 3,
+  "fields": {
+    "name": "USA",
+    "image": "images/USA_leg.png"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 4,
+  "fields": {
+    "name": "Thiland",
+    "image": "images/thi_fleg.png"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 5,
+  "fields": {
+    "name": "Egypt",
+    "image": "images/egypt_fleg.png"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 6,
+  "fields": {
+    "name": "Canada",
+    "image": "images/canada_fleg.jpg"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 7,
+  "fields": {
+    "name": "French",
+    "image": "images/french_fleg.png"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 8,
+  "fields": {
+    "name": "Italy",
+    "image": "images/Italy.jpg"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 9,
+  "fields": {
+    "name": "Brazil",
+    "image": "images/Brazil_fleg.png"
+  }
+},
+{
+  "model": "vacations.country",
+  "pk": 10,
+  "fields": {
+    "name": "Israel",
+    "image": "images/israel.jpg"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 1,
+  "fields": {
+    "country": 1,
+    "title": "Sydney",
+    "description": "Great place in the gold cost",
+    "image": "vacation_images/Sydney.jpg",
+    "price": "1850.00",
+    "start_date": "2025-06-30",
+    "end_date": "2025-07-24"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 2,
+  "fields": {
+    "country": 1,
+    "title": "Melbourne",
+    "description": "Great city in Victoria",
+    "image": "vacation_images/melbourne.jpg",
+    "price": "1250.00",
+    "start_date": "2025-08-13",
+    "end_date": "2025-09-13"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 3,
+  "fields": {
+    "country": 3,
+    "title": "New York",
+    "description": "come and visit The big Apple",
+    "image": "vacation_images/new_york.webp",
+    "price": "999.00",
+    "start_date": "2025-09-10",
+    "end_date": "2025-09-20"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 4,
+  "fields": {
+    "country": 2,
+    "title": "Taj Mahal",
+    "description": "The Great Taj Mahal!",
+    "image": "vacation_images/india1.jpg",
+    "price": "780.00",
+    "start_date": "2025-08-06",
+    "end_date": "2025-08-25"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 5,
+  "fields": {
+    "country": 4,
+    "title": "BangKok",
+    "description": "the great beach of thiland",
+    "image": "vacation_images/bangkook.jpg",
+    "price": "840.00",
+    "start_date": "2025-08-19",
+    "end_date": "2025-08-29"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 6,
+  "fields": {
+    "country": 5,
+    "title": "Cairo",
+    "description": "come to see the pyramids",
+    "image": "vacation_images/egypt1.jpg",
+    "price": "450.00",
+    "start_date": "2025-08-13",
+    "end_date": "2025-08-20"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 7,
+  "fields": {
+    "country": 6,
+    "title": "Montreole",
+    "description": "Enjoy the big city",
+    "image": "vacation_images/montreal.jpg",
+    "price": "920.00",
+    "start_date": "2025-07-16",
+    "end_date": "2025-07-25"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 8,
+  "fields": {
+    "country": 7,
+    "title": "Paris",
+    "description": "Great food and wines",
+    "image": "vacation_images/france1.jpg",
+    "price": "800.00",
+    "start_date": "2025-07-29",
+    "end_date": "2025-08-29"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 9,
+  "fields": {
+    "country": 8,
+    "title": "Rome",
+    "description": "come to see great art",
+    "image": "vacation_images/italy2.jpg",
+    "price": "750.00",
+    "start_date": "2025-07-21",
+    "end_date": "2025-07-27"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 10,
+  "fields": {
+    "country": 9,
+    "title": "Rio",
+    "description": "Rock in rio",
+    "image": "vacation_images/rio_de.jpg",
+    "price": "699.00",
+    "start_date": "2025-07-15",
+    "end_date": "2025-07-25"
+  }
+},
+{
+  "model": "vacations.vacation",
+  "pk": 11,
+  "fields": {
+    "country": 10,
+    "title": "Tel Aviv",
+    "description": "a Non stop city",
+    "image": "vacation_images/TLV.jpg",
+    "price": "999.00",
+    "start_date": "2025-07-23",
+    "end_date": "2025-07-29"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add country",
+    "content_type": [
+      "vacations",
+      "country"
+    ],
+    "codename": "add_country"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change country",
+    "content_type": [
+      "vacations",
+      "country"
+    ],
+    "codename": "change_country"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete country",
+    "content_type": [
+      "vacations",
+      "country"
+    ],
+    "codename": "delete_country"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view country",
+    "content_type": [
+      "vacations",
+      "country"
+    ],
+    "codename": "view_country"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add vacation",
+    "content_type": [
+      "vacations",
+      "vacation"
+    ],
+    "codename": "add_vacation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change vacation",
+    "content_type": [
+      "vacations",
+      "vacation"
+    ],
+    "codename": "change_vacation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete vacation",
+    "content_type": [
+      "vacations",
+      "vacation"
+    ],
+    "codename": "delete_vacation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view vacation",
+    "content_type": [
+      "vacations",
+      "vacation"
+    ],
+    "codename": "view_vacation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add vacation booking",
+    "content_type": [
+      "vacations",
+      "vacationbooking"
+    ],
+    "codename": "add_vacationbooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change vacation booking",
+    "content_type": [
+      "vacations",
+      "vacationbooking"
+    ],
+    "codename": "change_vacationbooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete vacation booking",
+    "content_type": [
+      "vacations",
+      "vacationbooking"
+    ],
+    "codename": "delete_vacationbooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view vacation booking",
+    "content_type": [
+      "vacations",
+      "vacationbooking"
+    ],
+    "codename": "view_vacationbooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add vacation like",
+    "content_type": [
+      "vacations",
+      "vacationlike"
+    ],
+    "codename": "add_vacationlike"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change vacation like",
+    "content_type": [
+      "vacations",
+      "vacationlike"
+    ],
+    "codename": "change_vacationlike"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete vacation like",
+    "content_type": [
+      "vacations",
+      "vacationlike"
+    ],
+    "codename": "delete_vacationlike"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view vacation like",
+    "content_type": [
+      "vacations",
+      "vacationlike"
+    ],
+    "codename": "view_vacationlike"
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$720000$i1PT2BK8blIupoL8SXFknQ$XfVf/+O73wQso1OBKcxAa1F+KpSOxLUHggHb3+rqkOQ=",
+    "last_login": "2025-08-27T11:15:12.568Z",
+    "is_superuser": true,
+    "username": "root",
+    "first_name": "",
+    "last_name": "",
+    "email": "root@email.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-08-26T18:32:13.523Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$WuO4YFOssYynRTO41wf77F$2/KrsCL+OcqUgapxwkj/4qeo75L1NT4ZVu5tQRjGqcs=",
+    "last_login": "2025-08-27T10:33:31.760Z",
+    "is_superuser": false,
+    "username": "amos",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-27T10:33:10Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "vacations.vacationlike",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "amos"
+    ],
+    "vacation": 1,
+    "is_like": true
+  }
+},
+{
+  "model": "vacations.vacationlike",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "amos"
+    ],
+    "vacation": 2,
+    "is_like": true
+  }
+},
+{
+  "model": "vacations.vacationlike",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "amos"
+    ],
+    "vacation": 11,
+    "is_like": true
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-08-27T10:33:10.328Z",
+    "user": [
+      "root"
+    ],
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "object_id": "2",
+    "object_repr": "amos",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-08-27T10:33:18.794Z",
+    "user": [
+      "root"
+    ],
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "object_id": "2",
+    "object_repr": "amos",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+}
+]
