@@ -30,7 +30,11 @@ services:
       - ./media:/app/media
     ports:
       - "8000:8000"
-    command: python manage.py runserver 0.0.0.0:8000 # <--- auto-run Django web app
+    command: >
+      sh -c "python manage.py migrate &&
+             (python manage.py shell -c 'from vacations.models import Country; import sys; sys.exit(0) if Country.objects.exists() else sys.exit(1)' ||
+             python manage.py loaddata data.json) &&
+             python manage.py runserver 0.0.0.0:8000"
 
   stats:
     build: ./stats_site
@@ -48,8 +52,8 @@ services:
     volumes:
       - ./stats_site:/app
     ports:
-      - "8001:8001" # <--- map correctly: host 8001 → container 8001
-    command: python manage.py runserver 0.0.0.0:8001 # <--- auto-run Django stats app
+      - "8001:8001"
+    command: python manage.py runserver 0.0.0.0:8001
 
 volumes:
   db_data:
