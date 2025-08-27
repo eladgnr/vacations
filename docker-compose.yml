@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - static_data:/app/staticfiles
+      - ./media:/app/media
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000 # <--- auto-run Django web app
+
+  stats:
+    build: ./stats_site
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-db}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-stats-dev-secret}
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-1}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-127.0.0.1,localhost}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./stats_site:/app
+    ports:
+      - "8001:8001" # <--- map correctly: host 8001 → container 8001
+    command: python manage.py runserver 0.0.0.0:8001 # <--- auto-run Django stats app
+
+volumes:
+  db_data:
+  static_data:

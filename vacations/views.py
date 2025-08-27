@@ -17,6 +17,9 @@ from .models import Country, Vacation, VacationLike, VacationBooking
 from .forms import CustomUserCreationForm
 from .utils import get_country_weather
 from .forms import VacationForm
+from django.db.models import Count
+from django.http import JsonResponse
+from .models import Vacation
 
 """ This module contains views for the Vacations app.
 It includes views for displaying countries, vacation details, booking vacations,"""
@@ -241,3 +244,15 @@ def add_vacation(request):
     else:
         form = VacationForm()
     return render(request, 'vacations/add_vacation.html', {'form': form})
+
+
+def likes_per_country(request):
+    data = (
+        Vacation.objects.values("country__name")
+        # 👈 use the actual related name
+        .annotate(likes=Count("vacationlike"))
+        .order_by("country__name")
+    )
+    result = [{"country": item["country__name"], "likes": item["likes"]}
+              for item in data]
+    return JsonResponse(result, safe=False)
