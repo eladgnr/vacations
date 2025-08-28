@@ -135,3 +135,7 @@ Navbar now includes an About link.
 Logout now redirects to the login page, not Django’s admin logout template.
 
 Both web and stats wait for Postgres to be ready before starting.
+
+
+what else:
+👉 We need to copy (push) all project images to Docker Hub so you can pull and run them easily elsewhere.
