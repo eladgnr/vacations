@@ -20,6 +20,9 @@ from .forms import VacationForm
 from django.db.models import Count
 from django.http import JsonResponse
 from .models import Vacation
+from django.shortcuts import render
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 """ This module contains views for the Vacations app.
 It includes views for displaying countries, vacation details, booking vacations,"""
@@ -256,3 +259,12 @@ def likes_per_country(request):
     result = [{"country": item["country__name"], "likes": item["likes"]}
               for item in data]
     return JsonResponse(result, safe=False)
+
+
+def custom_logout_view(request):
+    logout(request)
+    return redirect('/accounts/login/')
+
+
+def about(request):
+    return render(request, "vacations/about.html")

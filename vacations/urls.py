@@ -24,6 +24,6 @@ urlpatterns = [
     path('vacation/order/<int:vacation_id>/',
          views.order_vacation, name='order_vacation'),
     path('add-vacation/', views.add_vacation, name='add_vacation'),
-
+    path('about/', views.about, name='about'),
 
 ]

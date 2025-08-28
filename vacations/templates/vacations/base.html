@@ -38,16 +38,17 @@
         <a href="{% url 'add_vacation' %}" class="btn btn-success btn-sm">
             ➕ Add New Vacation
         </a>
+        <a href="/admin/" class="btn btn-outline-dark btn-sm">⚙️ Admin Panel</a>
         {% endif %}
 
-        <form method="post" action="{% url 'logout' %}" class="d-inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger btn-sm">Sign Out</button>
-        </form>
+        <!-- ✅ GET-based logout -->
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Sign Out</a>
         {% else %}
         <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Login</a>
         <a href="{% url 'register' %}" class="btn btn-outline-success btn-sm">Register</a>
         {% endif %}
+        <a href="{% url 'about' %}" class="btn btn-outline-secondary btn-sm">About</a>
+
     </div>
 
     <!-- Messages -->
