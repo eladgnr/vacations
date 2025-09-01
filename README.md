@@ -198,3 +198,33 @@ User access control
 Test Files Location:
 vacations/tests.py
 stats_backend/tests.py
+
+
+
+## Docker Hub Deployment
+------------------------
+**Pre-built images are available on Docker Hub:**
+
+```bash
+# Pull and run with Docker Hub images
+curl -O https://raw.githubusercontent.com/yourusername/vacations/main/docker-compose.prod.yml
+curl -O https://raw.githubusercontent.com/yourusername/vacations/main/.env.example
+
+# Copy and configure environment
+cp .env.example .env
+# Edit .env with your settings
+
+# Start with pre-built images
+docker compose -f docker-compose.prod.yml up
+
+
+Docker Hub Images:
+
+yourusername/vacation-web:latest - Main Django application
+yourusername/vacation-stats:latest - Statistics backend
+yourusername/vacation-frontend:latest - React frontend
+
+
+eladgnr/vacation-web:latest - Main Django application
+eladgnr/vacation-stats:latest - Statistics backend
+eladgnr/vacation-frontend:latest - React frontend
