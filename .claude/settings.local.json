@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker compose:*)",
+      "WebFetch(domain:localhost)",
+      "WebFetch(domain:localhost)",
+      "WebFetch(domain:localhost)",
+      "Bash(curl:*)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

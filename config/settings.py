@@ -12,10 +12,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "stats-backend-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
 
-ALLOWED_HOSTS = (
-    os.environ.get("DJANGO_ALLOWED_HOSTS")
-    or os.environ.get("ALLOWED_HOSTS", "*,stats_backend,localhost,127.0.0.1")
-).split(",")
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
