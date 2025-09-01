@@ -116,6 +116,13 @@ export default function StatsHomepage() {
                 <h1>📊 Statistics Dashboard</h1>
                 <p>Welcome to the statistics site for the Vacations Project.</p>
 
+                {/* About link - visible to everyone */}
+                <div className="mb-4">
+                    <Link to="/about" className="btn btn-outline-light btn-lg">
+                        Learn More About This Project
+                    </Link>
+                </div>
+
                 {isLoggedIn && userData ? (
                     <div className="d-flex flex-column align-items-center mb-3">
                         <span className="mb-2">

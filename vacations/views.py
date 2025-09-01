@@ -26,6 +26,8 @@ from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import LikesDistributionSerializer
+from django.utils import timezone
+
 
 """ This module contains views for the Vacations app.
 It includes views for displaying countries, vacation details, booking vacations,"""
@@ -285,3 +287,27 @@ def likes_distribution(request):
 
     serializer = LikesDistributionSerializer(data, many=True)
     return Response(serializer.data)
+
+
+def vacations_overdue_api(request):
+    """Return vacations that are overdue (end_date < today)"""
+    overdue_vacations = Vacation.objects.filter(
+        end_date__lt=timezone.now().date()
+    ).select_related('country').values(
+        'id', 'title', 'description', 'start_date', 'end_date', 'price', 'country__name'
+    )
+
+    # Format the response to match what your frontend expects
+    result = []
+    for vacation in overdue_vacations:
+        result.append({
+            'id': vacation['id'],
+            'destination': vacation['title'],
+            'description': vacation['description'],
+            'start_date': vacation['start_date'],
+            'end_date': vacation['end_date'],
+            'price': vacation['price'],
+            'country': vacation['country__name']  # Add country name
+        })
+
+    return JsonResponse(result, safe=False)

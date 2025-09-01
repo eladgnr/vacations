@@ -9,6 +9,7 @@ import VacationsPerCountry from "./pages/VacationsPerCountry";
 import VacationsOverdue from "./pages/VacationsOverdue";
 import Likes from "./pages/Likes";        // ✅ new
 import TopLikes from "./pages/TopLikes";  // ✅ new
+import About from "./pages/About";
 
 export default function App() {
     return (
@@ -23,6 +24,7 @@ export default function App() {
                 <Route path="/likes" element={<Likes />} />          {/* ✅ new */}
                 <Route path="/top-likes" element={<TopLikes />} />   {/* ✅ new */}
                 <Route path="*" element={<NotFound />} />
+                <Route path="/about" element={<About />} />
             </Routes>
         </>
     );

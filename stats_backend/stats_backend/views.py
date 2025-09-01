@@ -17,6 +17,11 @@ def whoami(request):
     })
 
 
+def top_likes(request):
+    resp = requests.get("http://web:8000/api/likes/distribution/")
+    return JsonResponse(resp.json(), safe=False)
+
+
 def likes_total(request):
     resp = requests.get("http://web:8000/api/likes/total/")
     return JsonResponse(resp.json(), safe=False)
@@ -38,9 +43,22 @@ def vacations_per_country(request):
 
 
 def vacations_overdue(request):
-    # adjust path if needed
-    resp = requests.get("http://web:8000/api/vacations/overdue/")
-    return JsonResponse(resp.json(), safe=False)
+    try:
+        resp = requests.get("http://web:8000/api/vacations-overdue/")
+        print(f"Status code: {resp.status_code}")
+        print(f"Response text: {resp.text}")
+
+        if resp.status_code == 200:
+            return JsonResponse(resp.json(), safe=False)
+        else:
+            return JsonResponse({"error": f"API returned status {resp.status_code}", "details": resp.text}, status=500)
+    except requests.exceptions.JSONDecodeError as e:
+        print(f"JSON decode error: {e}")
+        print(f"Response content: {resp.text}")
+        return JsonResponse({"error": "Invalid JSON response", "content": resp.text}, status=500)
+    except Exception as e:
+        print(f"Request failed: {e}")
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 @csrf_exempt

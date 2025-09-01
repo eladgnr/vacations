@@ -5,7 +5,7 @@ import axios from "axios";
 
 interface Vacation {
     id: number;
-    title: string;
+    destination: string;
     country: string;
     start_date: string;
     end_date: string;
@@ -15,17 +15,19 @@ export default function VacationsOverdue() {
     const [vacations, setVacations] = useState<Vacation[]>([]);
 
     useEffect(() => {
+        console.log("useEffect running - about to fetch data");
         axios
             .get(`${import.meta.env.VITE_STATS_API_URL}/vacations-overdue`, {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log("Fetched data:", res.data);   // ✅ check what comes from backend
-                setVacations(res.data);                  // ✅ use the correct setter
+                console.log("Fetched data:", res.data);
+                console.log("Setting vacations state with:", res.data);
+                setVacations(res.data);
             })
             .catch((err) => console.error("Failed to fetch overdue vacations", err));
     }, []);
-
+    console.log("Vacations state:", vacations);
     return (
         <div className="container py-4">
             <div className="d-flex justify-content-between align-items-center mb-3">
@@ -54,7 +56,7 @@ export default function VacationsOverdue() {
                         {vacations.map((v) => (
                             <tr key={v.id} className="table-danger fw-bold">
                                 <td>{v.country}</td>
-                                <td>{v.title}</td>
+                                <td>{v.destination}</td>
                                 <td>{v.start_date}</td>
                                 <td>{v.end_date}</td>
                             </tr>

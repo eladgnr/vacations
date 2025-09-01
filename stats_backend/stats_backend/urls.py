@@ -17,4 +17,5 @@ urlpatterns = [
     path("likes/per-country/", views.likes_per_country, name="likes_per_country"),
     path("likes/per-vacation/", views.likes_per_vacation,
          name="likes_per_vacation"),
+    path("top-likes", views.top_likes, name="top_likes"),
 ]
