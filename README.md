@@ -220,11 +220,6 @@ docker compose -f docker-compose.prod.yml up
 
 Docker Hub Images:
 
-yourusername/vacation-web:latest - Main Django application
-yourusername/vacation-stats:latest - Statistics backend
-yourusername/vacation-frontend:latest - React frontend
-
-
 eladgnr/vacation-web:latest - Main Django application
 eladgnr/vacation-stats:latest - Statistics backend
 eladgnr/vacation-frontend:latest - React frontend

@@ -13,7 +13,7 @@ services:
       - "5432:5432"
 
   web:
-    image: yourusername/vacation-web:latest
+    image: eladgnr/vacation-web:latest
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_DB=${POSTGRES_DB}
@@ -28,7 +28,7 @@ services:
       - db
 
   stats_backend:
-    image: yourusername/vacation-stats:latest
+    image: eladgnr/vacation-stats:latest
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_DB=${POSTGRES_DB}
@@ -42,7 +42,7 @@ services:
       - db
 
   frontend:
-    image: yourusername/vacation-frontend:latest
+    image: eladgnr/vacation-frontend:latest
     environment:
       - VITE_STATS_API_URL=http://localhost:8001/api
     ports:
