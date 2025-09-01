@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Vacations from "./pages/Vacations";
@@ -12,9 +12,12 @@ import TopLikes from "./pages/TopLikes";  // ✅ new
 import About from "./pages/About";
 
 export default function App() {
+    const location = useLocation();
+    const showNavbar = location.pathname !== "/stats-homepage";
+
     return (
         <>
-            <Navbar />
+            {showNavbar && <Navbar />}
             <Routes>
                 <Route path="/" element={<Navigate to="/stats-homepage" replace />} />
                 <Route path="/vacations" element={<Vacations />} />

@@ -2,11 +2,16 @@ import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 
 
+def is_admin(user):
+    return user.is_staff or user.is_superuser
+
+
 @login_required
+@user_passes_test(is_admin)
 def whoami(request):
     return JsonResponse({
         "user_id": request.user.id,
@@ -17,31 +22,37 @@ def whoami(request):
     })
 
 
+@user_passes_test(is_admin)
 def top_likes(request):
     resp = requests.get("http://web:8000/api/likes/distribution/")
     return JsonResponse(resp.json(), safe=False)
 
 
+@user_passes_test(is_admin)
 def likes_total(request):
     resp = requests.get("http://web:8000/api/likes/total/")
     return JsonResponse(resp.json(), safe=False)
 
 
+@user_passes_test(is_admin)
 def likes_per_country(request):
     resp = requests.get("http://web:8000/api/likes/per-country/")
     return JsonResponse(resp.json(), safe=False)
 
 
+@user_passes_test(is_admin)
 def likes_per_vacation(request):
     resp = requests.get("http://web:8000/api/likes/per-vacation/")
     return JsonResponse(resp.json(), safe=False)
 
 
+@user_passes_test(is_admin)
 def vacations_per_country(request):
     resp = requests.get("http://web:8000/api/vacations-per-country/")
     return JsonResponse(resp.json(), safe=False)
 
 
+@user_passes_test(is_admin)
 def vacations_overdue(request):
     try:
         resp = requests.get("http://web:8000/api/vacations-overdue/")
@@ -80,8 +91,11 @@ def custom_login(request):
                     pass
 
             if user:
-                login(request, user)
-                return JsonResponse({"status": "ok", "user_id": user.id})
+                if user.is_staff or user.is_superuser:
+                    login(request, user)
+                    return JsonResponse({"status": "ok", "user_id": user.id})
+                else:
+                    return JsonResponse({"status": "error", "message": "Only Admins can login"}, status=403)
             else:
                 return JsonResponse({"status": "error", "message": "Invalid credentials"}, status=401)
 

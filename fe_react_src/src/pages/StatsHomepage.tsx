@@ -52,11 +52,12 @@ export default function StatsHomepage() {
                 setIsLoggedIn(true);
                 setUserData(whoami.data);
             } else {
-                alert("❌ Invalid credentials");
+                alert(`❌ ${res.data.message || "Login failed"}`);
             }
         } catch (err: any) {
             console.error("❌ Login failed:", err.response?.data || err.message);
-            alert("❌ Invalid credentials");
+            const errorMessage = err.response?.data?.message || "Invalid credentials";
+            alert(`❌ ${errorMessage}`);
         }
     };
 
