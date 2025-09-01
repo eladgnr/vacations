@@ -156,3 +156,45 @@ vacation_site/
 - **Interactive Charts:** Using Recharts library
 - **Responsive Design:** Bootstrap-based UI
 - **Real-time Data:** Live connection to Django APIs
+
+
+
+
+## Routing System
+
+Complete React Router setup with client-side navigation. Default route redirects to stats homepage. Includes 404 error handling for invalid URLs. All pages use Link components for smooth navigation without page refreshes. Routes cover statistics dashboard, data visualizations, about page, and catch-all error handling.
+
+
+Frontend Tests (React)
+# Run all tests
+docker compose exec frontend npm test
+
+# Run tests with UI
+docker compose exec frontend npm run test:ui
+
+# Run tests once (non-watch mode)
+docker compose exec frontend npm test -- --run
+
+Run Tests:
+# Run all Django tests
+docker compose exec web python manage.py test
+
+# Run specific app tests
+docker compose exec web python manage.py test vacations
+
+# Run with verbose output
+docker compose exec web python manage.py test --verbosity=2
+
+# Run stats backend tests
+docker compose exec stats_backend python manage.py test
+
+Test Coverage:
+
+View responses and authentication
+API endpoint functionality
+Database operations and models
+User access control
+
+Test Files Location:
+vacations/tests.py
+stats_backend/tests.py
