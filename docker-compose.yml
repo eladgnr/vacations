@@ -30,30 +30,38 @@ services:
       - ./media:/app/media
     ports:
       - "8000:8000"
-    command: >
-      sh -c "python manage.py migrate &&
-             (python manage.py shell -c 'from vacations.models import Country; import sys; sys.exit(0) if Country.objects.exists() else sys.exit(1)' ||
-             python manage.py loaddata data.json) &&
-             python manage.py runserver 0.0.0.0:8000"
+    command: python manage.py runserver 0.0.0.0:8000
 
-  stats:
-    build: ./stats_site
+  stats_backend:
+    build:
+      context: .
+      dockerfile: ./stats_backend/Dockerfile
     restart: unless-stopped
     env_file: .env
-    environment:
-      POSTGRES_HOST: ${POSTGRES_HOST:-db}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-stats-dev-secret}
-      DJANGO_DEBUG: ${DJANGO_DEBUG:-1}
-      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-127.0.0.1,localhost}
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - ./stats_site:/app
+      - ./stats_backend:/app
+      - static_data:/app/staticfiles
     ports:
       - "8001:8001"
     command: python manage.py runserver 0.0.0.0:8001
+
+  frontend:
+    build:
+      context: ./fe_react_src
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./fe_react_src:/app
+      - /app/node_modules
+    environment:
+      VITE_STATS_API_URL: "http://localhost:8001"
+      VITE_WEB_API_URL: "http://localhost:8000"
+    command: npm run dev -- --host 0.0.0.0 --port 5173
 
 volumes:
   db_data:

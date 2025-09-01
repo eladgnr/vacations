@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import VacationForm
 from .models import Vacation
 from django.shortcuts import render, redirect
-from datetime import date  # ✅ Make sure this is at the top
+from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -23,6 +23,9 @@ from .models import Vacation
 from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import LikesDistributionSerializer
 
 """ This module contains views for the Vacations app.
 It includes views for displaying countries, vacation details, booking vacations,"""
@@ -268,3 +271,17 @@ def custom_logout_view(request):
 
 def about(request):
     return render(request, "vacations/about.html")
+
+
+@api_view(['GET'])
+def likes_distribution(request):
+    # Aggregate likes per vacation destination
+    data = (
+        Vacation.objects
+        .values('destination')
+        .annotate(likes=Count('likes'))
+        .order_by('-likes')
+    )
+
+    serializer = LikesDistributionSerializer(data, many=True)
+    return Response(serializer.data)

@@ -15,3 +15,8 @@ class VacationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vacation
         fields = '__all__'
+
+
+class LikesDistributionSerializer(serializers.Serializer):
+    destination = serializers.CharField()
+    likes = serializers.IntegerField()

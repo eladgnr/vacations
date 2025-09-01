@@ -1,0 +1,21 @@
+/* Minimal reset so pages can be truly full-screen/full-width */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+/* Remove Vite template constraints */
+#root {
+    max-width: none;
+    padding: 0;
+    text-align: initial;
+}
+
+/* optional: keep your default font/colors if you want */
